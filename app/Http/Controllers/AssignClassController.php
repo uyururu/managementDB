@@ -125,4 +125,5 @@ class AssignClassController extends Controller
         $data['header_title'] = "My Class & Subject";
         return view('teacher.my_class_subject', $data);
     }
+    
 }

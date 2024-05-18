@@ -21,6 +21,7 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
+                                @include('_message');
                                 <div class="card">
                                     <div class="card-header">
                                         <h3 class="card-title">
@@ -75,45 +76,58 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- @include('_message')
-                         --}}
+                         
                         @if (!empty(Request::get('class_id')) && !empty(Request::get('subject_id')))
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Class TimeTable</h3>
-                                </div>
-                                <div class="card-body p-0">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Week</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th>Room Number</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($week as $value)
+                            <form action="{{ url('admin/class_timetable/add') }}" method="post">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="subject_id" value="{{ Request::get('subject_id') }}">
+                                <input type="hidden" name="class_id" value="{{ Request::get('class_id') }}">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Class TimeTable</h3>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <table class="table table-striped">
+                                            <thead>
                                                 <tr>
-                                                    <th>{{ $value['week_name'] }}</th>
-                                                    <th>
-                                                        <input type="time" name="start_name" class="form-control">
-                                                    </th>
-                                                    <th>
-                                                        <input type="time" name="end_name" class="form-control">
-                                                    </th>
-                                                    <th>
-                                                        <input type="text" name="room_number" class="form-control">
-                                                    </th>
+                                                    <th>Week</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th>Room Number</th>
                                                 </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    <div style="padding: 10px;text-align: center">
-                                        <button class="btn btn-primary">Submary</button>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                $i = 1;
+                                                @endphp
+                                                @foreach ($week as $value)
+                                                    <tr>
+                                                        <th>
+                                                            <input type="hidden" name="timetable[{{ $i }}][week_id]" value="{{ $value['week_id'] }}">
+                                                            {{ $value['week_name'] }}
+                                                        </th>
+                                                        <th>
+                                                            <input type="time" name="timetable[{{ $i }}][start_time]" value="{{ $value['start_time'] }}" class="form-control">
+                                                        </th>
+                                                        <th>
+                                                            <input type="time" name="timetable[{{ $i }}][end_time]"  value="{{ $value['end_time'] }}" class="form-control">
+                                                        </th>
+                                                        <th>
+                                                            <input type="text" style="width: 200px" name="timetable[{{ $i }}][room_number]"  value="{{ $value['room_number'] }}" class="form-control">
+                                                        </th>
+                                                    </tr>
+                                                    @php
+                                                    $i++;
+                                                    @endphp
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        <div style="padding: 10px;text-align: center">
+                                            <button class="btn btn-primary">Submary</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         @endif
                     </div>
                 </div>

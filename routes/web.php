@@ -159,6 +159,8 @@ Route::group(['middleware' => 'admin'], function () {
      */
     Route::get('admin/class_timetable/list', [ClassTimeTableController::class, 'list']);
     Route::post('admin/class_timetable/get_subject', [ClassTimeTableController::class, 'get_subject']);
+    Route::post('admin/class_timetable/add', [ClassTimeTableController::class, 'insert_update']);
+
 
     // Route::get('admin/class_timetable/add', [ClassTimeTableController::class, 'add']);
     // Route::post('admin/class_timetable/add', [ClassTimeTableController::class, 'insert']);
@@ -187,7 +189,8 @@ Route::group(['middleware' => 'teacher'], function () {
     /**
      * Teacher Class - Subject
      */
-    Route::get('teacher/my_class_subject', [StudentController::class, 'MyClassSubject']);
+    Route::get('teacher/my_class_subject', [AssignClassController::class, 'MyClassSubject']);
+    Route::get('teacher/my_class_subject/class_timetable/{class_id}/{subject_id}', [ClassTimeTableController::class, 'MyTimeTableTeacher']);
     Route::post('teacher/my_class_subject', [StudentController::class, 'UpdateMyClassSubject']);
 
     /**
@@ -220,6 +223,9 @@ Route::group(['middleware' => 'student'], function () {
      */
     Route::get('student/my_subject', [SubjectController::class, 'MySubject']);
     Route::post('student/my_subject', [SubjectController::class, 'MySubject']);
+    Route::get('student/my_timetable', [ClassTimeTableController::class, 'Mytimetable']);
+
+    
 
 
 });
