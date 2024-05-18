@@ -54,7 +54,7 @@
                                                     @php
                                                         $ClassSubject = $value->getMyTimetable(
                                                             $value->class_id,
-                                                            $value->subject_id,
+                                                            $value->subject_id
                                                         );
                                                     @endphp
                                                     @if (!empty($ClassSubject))

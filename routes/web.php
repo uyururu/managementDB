@@ -258,4 +258,7 @@ Route::group(['middleware' => 'parent'], function () {
      */
     Route::get('parent/my_relative/subject/{student_id}', [SubjectController::class, 'ParentRelativeSubject']);
 
+    Route::get('parent/my_relative/subject/class_timetable/{class_id}/{subject_id}/{student_id}',
+                         [ClassTimeTableController::class, 'MytimebleParent']);
+
 });

@@ -27,14 +27,21 @@
                                             <th style="width: 10px">#</th>
                                             <th>Subject Name</th>
                                             <th>Subject Type</th>
+                                            <th>Action</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($getRecord as $value)
                                             <tr>
-                                                <td>{{ $value->id }}</td>
                                                 <td>{{ $value->subject_name }}</td>
                                                 <td>{{ $value->subject_type }}</td>
+                                                <td>
+                                                <td>
+                                                    <a href="{{ url('parent/my_relative/subject/class_timetable/' . $value->class_id . '/' . $value->subject_id.'/'.$getUser->id)  }}"
+                                                        class="btn btn-primary"> My Classtimetable</a>
+                                                </td>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

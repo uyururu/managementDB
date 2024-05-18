@@ -7,6 +7,7 @@ use App\Models\ClassModel;
 use App\Models\SubjectModel;
 use App\Models\ClassSubjectModel;
 use App\Models\WeekModel;
+use App\Models\User;
 use App\Models\ClassSubjectTimetableModel;
 use Auth;
 
@@ -120,7 +121,7 @@ class ClassTimeTableController extends Controller
     public function MyTimeTableTeacher($class_id, $subject_id)
     {
         $data['getClass'] = ClassModel::getSingle($class_id);
-        $data['getSubject'] = SubjectModel  ::getSingle($subject_id);
+        $data['getSubject'] = SubjectModel::getSingle($subject_id);
 
         $getWeek = WeekModel::getRecord();
         $week = array();
@@ -143,9 +144,43 @@ class ClassTimeTableController extends Controller
             }
             $result[] = $dataW;
         }
-         $data['getRecord'] = $result;
+        $data['getRecord'] = $result;
         $data['header_title'] = "My Timetable ";
         return view('teacher.my_timetable', $data);
+
+    }
+
+    /// parent
+    public function MytimebleParent ($class_id,$subject_id,$student_id)
+     {
+        $data['getClass'] = ClassModel::getSingle($class_id);
+        $data['getSubject'] = SubjectModel::getSingle($subject_id);
+        $data['getStudent'] = User::getSingle($student_id);
+
+        $getWeek = WeekModel::getRecord();
+        $week = array();
+        foreach ($getWeek as $value) {
+            $dataW = array();
+            $dataW['week_name'] = $value->name;
+            $ClassSubject = ClassSubjectTimetableModel::getRecordClassSubject(
+                $class_id,
+                $subject_id,
+                $value->id
+            );
+            if (!empty($ClassSubject)) {
+                $dataW['start_time'] = $ClassSubject->start_time;
+                $dataW['end_time'] = $ClassSubject->end_time;
+                $dataW['room_number'] = $ClassSubject->room_number;
+            } else {
+                $dataW['start_time'] = '';
+                $dataW['end_time'] = '';
+                $dataW['room_number'] = '';
+            }
+            $result[] = $dataW;
+        }
+        $data['getRecord'] = $result;
+        $data['header_title'] = "My Timetable ";
+        return view('parent.my_timetable', $data);
 
     }
 }
