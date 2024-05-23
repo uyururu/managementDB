@@ -56,14 +56,7 @@ return [
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
             'prefix_indexes' => true,
-            /**
-             * sửa lại thành false nếu lỗi syntax error or access violation in group by
-             * 
-             */
-            'strict' => true,
-            /**
-             * 
-             */
+            'strict' => false,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),

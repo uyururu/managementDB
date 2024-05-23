@@ -12,7 +12,9 @@ use App\Http\Controllers\ParentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\AssignClassController;
 use App\Http\Controllers\ClassTimeTableController;
+use App\Http\Controllers\ExaminationsController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -60,8 +62,6 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/admin/list', [AdminController::class, 'list']);
     Route::get('admin/admin/add', [AdminController::class, 'add']);
     Route::post('admin/admin/add', [AdminController::class, 'insert']);
-
-
     Route::get('admin/admin/edit/{id}', [AdminController::class, 'edit']);
     Route::post('admin/admin/edit/{id}', [AdminController::class, 'update']);
     Route::get('admin/admin/delete/{id}', [AdminController::class, 'delete']);
@@ -161,12 +161,18 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('admin/class_timetable/get_subject', [ClassTimeTableController::class, 'get_subject']);
     Route::post('admin/class_timetable/add', [ClassTimeTableController::class, 'insert_update']);
 
+    // Exam
+    Route::get('admin/examinations/exam/list', [ExaminationsController::class, 'exam_list']);
+    Route::get('admin/examinations/exam/add', [ExaminationsController::class, 'exam_add']);
+    Route::post('admin/examinations/exam/add', [ExaminationsController::class, 'exam_insert']);
+    Route::get('admin/examinations/exam/edit/{id}', [ExaminationsController::class, 'exam_edit']);
+    Route::post('admin/examinations/exam/edit/{id}', [ExaminationsController::class, 'exam_update']);
+    Route::get('admin/examinations/exam/delete/{id}', [ExaminationsController::class, 'exam_delete']);
 
-    // Route::get('admin/class_timetable/add', [ClassTimeTableController::class, 'add']);
-    // Route::post('admin/class_timetable/add', [ClassTimeTableController::class, 'insert']);
-    // Route::get('admin/class_timetable/edit/{id}', [ClassTimeTableController::class, 'edit']);
-    // Route::post('admin/class_timetable/edit/{id}', [ClassTimeTableController::class, 'update']);
-    // Route::get('admin/class_timetable/delete/{id}', [ClassTimeTableController::class, 'delete']);
+    //exam_schedule
+    Route::get('admin/examinations/exam_schedule', [ExaminationsController::class, 'exam_schedule']);
+
+    Route::post('admin/examinations/exam_schedule_insert', [ExaminationsController::class, 'exam_schedule_insert']);
 });
 
 /**
@@ -224,8 +230,11 @@ Route::group(['middleware' => 'student'], function () {
     Route::get('student/my_subject', [SubjectController::class, 'MySubject']);
     Route::post('student/my_subject', [SubjectController::class, 'MySubject']);
     Route::get('student/my_timetable', [ClassTimeTableController::class, 'Mytimetable']);
+// exam timetable
+    Route::get('student/my_exam_timetable', [ExaminationsController::class, 'MyExamTimetable']);
 
-    
+
+
 
 
 });
@@ -258,7 +267,9 @@ Route::group(['middleware' => 'parent'], function () {
      */
     Route::get('parent/my_relative/subject/{student_id}', [SubjectController::class, 'ParentRelativeSubject']);
 
-    Route::get('parent/my_relative/subject/class_timetable/{class_id}/{subject_id}/{student_id}',
-                         [ClassTimeTableController::class, 'MytimebleParent']);
+    Route::get(
+        'parent/my_relative/subject/class_timetable/{class_id}/{subject_id}/{student_id}',
+        [ClassTimeTableController::class, 'MytimebleParent']
+    );
 
 });

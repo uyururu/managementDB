@@ -8,10 +8,6 @@
                     <div class="col-sm-6">
                         <h1>List of Class Timetable</h1>
                     </div>
-                    {{-- <div class="col-sm-6" style="text-align: right">
-                        <a href="{{ url('admin/class_timetable/add') }}" class="btn btn-primary">Add New Timetable for
-                            Class</a>
-                    </div> --}}
                 </div>
             </div>
         </section>
@@ -58,12 +54,6 @@
                                                         @endif
                                                     </select>
                                                 </div>
-                                                {{-- <div class="form-group col-md-3">
-                                                    <label>Subject Name</label>
-                                                    <input type="text" class="form-control" name="subject_name"
-                                                        placeholder="Enter Subject Name"
-                                                        value="{{ Request::get('subject_name') }}">
-                                                </div> --}}
                                                 <div class="form-group col-md-3">
                                                     <button class="btn btn-primary" type="submit"
                                                         style="margin-top:30px">Search</button>

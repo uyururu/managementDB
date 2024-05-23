@@ -124,17 +124,7 @@
                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
             </div>
         </li>
-        {{-- <li class="nav-item">
-            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                <i class="fas fa-expand-arrows-alt"></i>
-            </a>
-        </li> --}}
-        {{-- <li class="nav-item">
-            <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#"
-                role="button">
-                <i class="fas fa-th-large"></i>
-            </a>
-        </li> --}}
+
     </ul>
 </nav>
 <!-- /.navbar --
@@ -271,6 +261,38 @@
                             </li>
                         </ul>
                     </li>
+                    {{-- video 47 --}}
+                    <li class="nav-item  @if (Request::segment(2) == 'examinations') menu-is-opening menu-open @endif">
+                        <a href="#" class="nav-link @if (Request::segment(2) == 'examination') active @endif">
+                            <i class="nav-icon fas fa-table"></i>
+                            <p>
+                                Examinations
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ url('admin/examinations/exam/list') }}"
+                                    class="nav-link @if (Request::segment(3) == 'exam') active @endif">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                        Exam
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ url('admin/examinations/exam_schedule/list') }}"
+                                    class="nav-link @if (Request::segment(3) == 'exam_schedule') active @endif">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>
+                                        Exam Schedule
+                                    </p>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
 
 
                     <li class="nav-item">
@@ -362,6 +384,15 @@
                             <i class="nav-icon fas fa-user"></i>
                             <p>
                                 My TimeTable
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('student/my_exam_timetable') }}"
+                            class="nav-link @if (Request::segment(2) == 'my_exam_timetable') active @endif">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                My Exam TimeTable
                             </p>
                         </a>
                     </li>
