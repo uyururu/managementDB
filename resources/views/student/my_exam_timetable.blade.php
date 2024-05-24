@@ -27,15 +27,29 @@
                                         <table class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th>Week</th>
+                                                    <th>Subject Name</th>
+                                                    <th>Day</th>
+                                                    <th>Exam Date</th>
                                                     <th>Start Time</th>
                                                     <th>End Time</th>
                                                     <th>Room Number</th>
+                                                    <th>Full Marks</th>
+                                                    <th>Passing Marks</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ( $value['exam'] as $valueW )
-                                                  
+                                                @foreach ( $value['exam'] as $valueS )
+                                                  <tr>
+                                                    <td>{{ $valueS['subject_name'] }}</td>
+                                                    <td>{{ date('l', strtotime($valueS['exam_date'])) }}</td>
+                                                    <td>{{ date('d-m-Y', strtotime($valueS['exam_date'])) }}</td>
+                                                    <td>{{ date('h:i A', strtotime( $valueS['start_time']))  }}</td>
+                                                    <td>{{ date('h:i A', strtotime( $valueS['end_time'])) }}</td>
+                                                    <td>{{ $valueS['room_number'] }}</td>
+                                                    <td>{{ $valueS['full_marks'] }}</td>
+                                                    <td>{{ $valueS['passing_mark'] }}</td>
+
+                                                  </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>

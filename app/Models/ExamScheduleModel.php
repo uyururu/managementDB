@@ -25,7 +25,7 @@ class ExamScheduleModel extends Model
             ->join('exam', 'exam.id', '=', 'exam_schedule.exam_id')
             ->where('exam_schedule.class_id', '=',$class_id)
             ->groupBy('exam_id')
-            ->groupBy('exam_schedule.id ','desc')
+                // ->groupBy('exam_schedule.id ','desc')
             ->get();
     }
     static public function getExamTimetable($exam_id, $class_id)

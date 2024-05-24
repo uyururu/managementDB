@@ -153,13 +153,14 @@ class ExaminationsController extends Controller
                 $dataS['start_time'] = $valueS->start_time;
                 $dataS['end_time'] = $valueS->end_time;
                 $dataS['room_number'] = $valueS->room_number;
+                $dataS['full_marks'] = $valueS->full_marks;
                 $dataS['passing_mark'] = $valueS->passing_mark;
                 $resultS[] =  $dataS;
 
             }
     
             $dataE['exam'] = $resultS;
-            $result = $dataE;
+            $result[] = $dataE;
         }
         $data['getRecord'] = $result;
         // dd($result);
