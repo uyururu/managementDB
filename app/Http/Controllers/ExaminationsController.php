@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+use App\Models\User;
 use App\Models\ExamModel;
 use App\Models\ClassModel;
 use App\Models\ClassSubjectModel;
 use App\Models\ExamScheduleModel;
+use App\Models\AssignClassModel;
 
 
 class ExaminationsController extends Controller
@@ -80,8 +82,7 @@ class ExaminationsController extends Controller
                 $dataS['subject_type'] = $value->subject_type;
 
                 $ExamSchudule = ExamScheduleModel::getRecordSingle($request->get('exam_id'), $request->get('class_id'), $value->subject_id);
-                if(!empty($ExamSchudule)) 
-                {
+                if (!empty($ExamSchudule)) {
                     $dataS['exam_date'] = $ExamSchudule->exam_date;
                     $dataS['start_time'] = $ExamSchudule->start_time;
                     $dataS['end_time'] = $ExamSchudule->end_time;
@@ -89,8 +90,7 @@ class ExaminationsController extends Controller
                     $dataS['full_marks'] = $ExamSchudule->full_marks;
                     $dataS['passing_mark'] = $ExamSchudule->passing_mark;
 
-                }
-                else{
+                } else {
                     $dataS['exam_date'] = '';
                     $dataS['start_time'] = '';
                     $dataS['end_time'] = '';
@@ -102,7 +102,7 @@ class ExaminationsController extends Controller
                 $result[] = $dataS;
             }
         }
-         $data['getRecord'] = $result;  
+        $data['getRecord'] = $result;
 
 
         $data['header_title'] = 'Exam Schedule';
@@ -135,18 +135,18 @@ class ExaminationsController extends Controller
         }
     }
     // exam timetable of student    
-    public function MyExamTimetable(Request $request){
-        
+    public function MyExamTimetable(Request $request)
+    {
+
         $class_id = Auth::user()->class_id;
         $getExam = ExamScheduleModel::getExam($class_id);
         $result = array();
-        foreach($getExam as $value)
-        {
+        foreach ($getExam as $value) {
             $dataE = array();
             $dataE['name'] = $value->exam_name;
             $getExamTimetable = ExamScheduleModel::getExamTimetable($value->exam_id, $class_id);
             $resultS = array();
-            foreach(  $getExamTimetable as $valueS){
+            foreach ($getExamTimetable as $valueS) {
                 $dataS = array();
                 $dataS['subject_name'] = $valueS->subject_name;
                 $dataS['exam_date'] = $valueS->exam_date;
@@ -155,10 +155,10 @@ class ExaminationsController extends Controller
                 $dataS['room_number'] = $valueS->room_number;
                 $dataS['full_marks'] = $valueS->full_marks;
                 $dataS['passing_mark'] = $valueS->passing_mark;
-                $resultS[] =  $dataS;
+                $resultS[] = $dataS;
 
             }
-    
+
             $dataE['exam'] = $resultS;
             $result[] = $dataE;
         }
@@ -167,6 +167,83 @@ class ExaminationsController extends Controller
         $data['header_title'] = 'My Exam Timetable';
         return view('student.my_exam_timetable', $data);
     }
+    // teacher side work
+    public function MyExamTimetableTeacher()
+    {
+        $result = array();
+        $getClass = AssignClassModel::getMyClassSubjectGroup(Auth::user()->id);
+
+        foreach ($getClass as $class) {
+            $dataC = array();
+            $dataC['class_name'] = $class->class_name;
+
+            $getExam = ExamScheduleModel::getExam($class->class_id);
+            $examArray = array();
+            foreach ($getExam as $exam) {
+                $dataE = array();
+                $dataE['exam_name'] = $exam->exam_name;
+                $getExamTimetable = ExamScheduleModel::getExamTimetable($exam->exam_id, $class->class_id);
+                $subjectArray = array();
+                foreach ($getExamTimetable as $valueS) {
+                    $dataS = array();
+                    $dataS['subject_name'] = $valueS->subject_name;
+                    $dataS['exam_date'] = $valueS->exam_date;
+                    $dataS['start_time'] = $valueS->start_time;
+                    $dataS['end_time'] = $valueS->end_time;
+                    $dataS['room_number'] = $valueS->room_number;
+                    $dataS['full_marks'] = $valueS->full_marks;
+                    $dataS['passing_mark'] = $valueS->passing_mark;
+                    $subjectArray[] = $dataS;
+
+                }
+                $dataE['subject'] = $subjectArray;
+                $examArray[] = $dataE;
+            }
+
+            $dataC['exam'] = $examArray;
+            $result[] = $dataC;
+
+
+        }
+        $data['getRecord'] = $result;
+        $data['header_title'] = 'My Exam Timetable Teacher';
+        return view('teacher/my_exam_timetable', $data);
+
+    }
+    // parent
+    public function ParentMyExamTimetable($student_id)
+    {
+        $getStudent = User::getSingle($student_id);
+        $class_id =  $getStudent->class_id;
+        $getExam = ExamScheduleModel::getExam($class_id);
+        $result = array();
+        foreach ($getExam as $value) {
+            $dataE = array();
+            $dataE['name'] = $value->exam_name;
+            $getExamTimetable = ExamScheduleModel::getExamTimetable($value->exam_id, $class_id);
+            $resultS = array();
+            foreach ($getExamTimetable as $valueS) {
+                $dataS = array();
+                $dataS['subject_name'] = $valueS->subject_name;
+                $dataS['exam_date'] = $valueS->exam_date;
+                $dataS['start_time'] = $valueS->start_time;
+                $dataS['end_time'] = $valueS->end_time;
+                $dataS['room_number'] = $valueS->room_number;
+                $dataS['full_marks'] = $valueS->full_marks;
+                $dataS['passing_mark'] = $valueS->passing_mark;
+                $resultS[] = $dataS;
+
+            }
+
+            $dataE['exam'] = $resultS;
+            $result[] = $dataE;
+        }
+        $data['getRecord'] = $result;
+        // dd($result);
+        $data['header_title'] = 'My Exam Timetable';
+        return view('parent.my_exam_timetable', $data);
+    }
+
 }
 
 

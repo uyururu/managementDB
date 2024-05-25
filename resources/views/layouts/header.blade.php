@@ -341,6 +341,18 @@
                             </p>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a href="{{ url('teacher/my_exam_timetable') }}"
+                            class="nav-link @if (Request::segment(2) == 'my_exam_timetable') active @endif">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                My Exam TimeTable
+                            </p>
+                        </a>
+                    </li>
+
+
                     <li class="nav-item">
                         <a href="{{ url('teacher/account') }}"
                             class="nav-link @if (Request::segment(2) == 'account') active @endif">
@@ -369,6 +381,18 @@
                             </p>
                         </a>
                     </li>
+                   
+                    <li class="nav-item">
+                        <a href="{{ url('student/my_calendar') }}"
+                            class="nav-link @if (Request::segment(2) == 'my_calendar') active @endif">
+                            <i class="nav-icon fas fa-user"></i>
+                            <p>
+                                My Calendar
+                            </p>
+                        </a>
+                    </li>
+
+                    
                     <li class="nav-item">
                         <a href="{{ url('student/my_subject') }}"
                             class="nav-link @if (Request::segment(2) == 'my_subject') active @endif">
@@ -378,6 +402,8 @@
                             </p>
                         </a>
                     </li>
+
+
                     <li class="nav-item">
                         <a href="{{ url('student/my_timetable') }}"
                             class="nav-link @if (Request::segment(2) == 'my_subject') active @endif">
@@ -387,6 +413,8 @@
                             </p>
                         </a>
                     </li>
+
+
                     <li class="nav-item">
                         <a href="{{ url('student/my_exam_timetable') }}"
                             class="nav-link @if (Request::segment(2) == 'my_exam_timetable') active @endif">
@@ -396,6 +424,8 @@
                             </p>
                         </a>
                     </li>
+
+
                     <li class="nav-item">
                         <a href="{{ url('student/account') }}"
                             class="nav-link @if (Request::segment(2) == 'account') active @endif">
@@ -438,7 +468,7 @@
                             class="nav-link @if (Request::segment(2) == 'my_relative') active @endif">
                             <i class="nav-icon fas fa-user"></i>
                             <p>
-                                My Relative
+                                My student
                             </p>
                         </a>
                     </li>

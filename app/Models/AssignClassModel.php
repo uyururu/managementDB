@@ -49,11 +49,9 @@ class AssignClassModel extends Model
     static public function getMyClassSubject($teacher_id)
     {
         return AssignClassModel::select('assign_class_teacher.*', 'class.name as class_name', 'subject.name as subject_name', 'subject.type as subject_type', 'class.id as class_id', 'subject.id as subject_id')
-            // ->join('users as teacher', 'teacher.id', '=', 'assign_class_teacher.teacher_id')
             ->join('class', 'class.id', '=', 'assign_class_teacher.class_id')
             ->join('class_subject', 'class_subject.class_id', '=', 'class.id')
             ->join('subject', 'subject.id', '=', 'class_subject.subject_id')
-            // ->join('users', 'users.id', '=', 'assign_class_teacher.created_by')
             ->where('assign_class_teacher.is_delete', '=', 0)
             ->where('assign_class_teacher.status', '=', 0)
             ->where('subject.is_delete', '=', 0)
@@ -63,9 +61,21 @@ class AssignClassModel extends Model
             ->where('assign_class_teacher.teacher_id', '=', $teacher_id)
             ->get();
     }
+
+    static public function getMyClassSubjectGroup($teacher_id)
+    {
+        return AssignClassModel::select('assign_class_teacher.*', 'class.name as class_name', 'class.id as class_id')
+            ->join('class', 'class.id', '=', 'assign_class_teacher.class_id')
+            ->where('assign_class_teacher.is_delete', '=', 0)
+            ->where('assign_class_teacher.status', '=', 0)
+            ->where('assign_class_teacher.teacher_id', '=', $teacher_id)
+             ->get();
+    }
+
+
     static public function getMyTimetable($class_id, $subject_id)
     {
-       $getWeek = WeekModel::getWeekUsingName(date('l'));
-       return ClassSubjectTimetableModel::getRecordClassSubject($class_id, $subject_id, $getWeek->id);
+        $getWeek = WeekModel::getWeekUsingName(date('l'));
+        return ClassSubjectTimetableModel::getRecordClassSubject($class_id, $subject_id, $getWeek->id);
     }
 }

@@ -13,8 +13,9 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\AssignClassController;
 use App\Http\Controllers\ClassTimeTableController;
 use App\Http\Controllers\ExaminationsController;
+use App\Http\Controllers\CalendarController;
+;
 use Illuminate\Support\Facades\Route;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -204,6 +205,10 @@ Route::group(['middleware' => 'teacher'], function () {
      */
     Route::get('teacher/my_student', [StudentController::class, 'MyStudent']);
     Route::post('teacher/my_student', [StudentController::class, 'MyStudent']);
+    // Exam Timetable of Teachers
+
+    Route::get('teacher/my_exam_timetable', [ExaminationsController::class, 'MyExamTimetableTeacher']);
+
 
 });
 
@@ -230,9 +235,11 @@ Route::group(['middleware' => 'student'], function () {
     Route::get('student/my_subject', [SubjectController::class, 'MySubject']);
     Route::post('student/my_subject', [SubjectController::class, 'MySubject']);
     Route::get('student/my_timetable', [ClassTimeTableController::class, 'Mytimetable']);
-// exam timetable
+    // exam timetable
     Route::get('student/my_exam_timetable', [ExaminationsController::class, 'MyExamTimetable']);
 
+    // calendar
+    Route::get('student/my_calendar', [CalendarController::class, 'MyCalendar']);
 
 
 
@@ -266,6 +273,10 @@ Route::group(['middleware' => 'parent'], function () {
      * parent relative Subject
      */
     Route::get('parent/my_relative/subject/{student_id}', [SubjectController::class, 'ParentRelativeSubject']);
+
+    // exam timetable
+
+    Route::get('parent/my_relative/exam_timetable/{student_id}', [ExaminationsController::class, 'ParentMyExamTimetable']);
 
     Route::get(
         'parent/my_relative/subject/class_timetable/{class_id}/{subject_id}/{student_id}',
