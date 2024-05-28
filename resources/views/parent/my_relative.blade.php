@@ -83,6 +83,8 @@
                                                 <td style="width: 250px; display: flex">
                                                     <a href="{{ url('parent/my_relative/subject/' . $value->id) }}" class="btn btn-success mr-10">Subject</a>
 
+                                                    <a href="{{ url('parent/my_relative/calendar/' . $value->id) }}"class="btn btn-warning">Calendar</a>
+
                                                     <a href="{{ url('parent/my_relative/exam_timetable/' . $value->id) }}"class="btn btn-primary">Exam Timetable</a>
                                                 </td>
                                             </tr>

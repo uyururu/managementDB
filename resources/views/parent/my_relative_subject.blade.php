@@ -47,8 +47,7 @@
                                     </tbody>
                                 </table>
                                 <div style="padding: 10px;text-align: right">
-                                    {{-- {!! $getRecord->appends(Illuminate\Support\Facades\Request::except('page'))->links() !!} --}}
-                                </div>
+                                 </div>
                             </div>
                         </div>
                     </div>

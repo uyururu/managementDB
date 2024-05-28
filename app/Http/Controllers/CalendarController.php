@@ -7,6 +7,8 @@ use App\Models\ClassSubjectModel;
 use App\Models\WeekModel;
 use App\Models\ClassSubjectTimetableModel;
 use App\Models\ExamScheduleModel;
+use App\Models\User;
+use App\Models\AssignClassModel;
 
 class CalendarController extends Controller
 {
@@ -78,5 +80,26 @@ class CalendarController extends Controller
             $result[] = $dataS;
         }
         return $result;
+    }
+    //parent side
+      public function MyCalendarParent($student_id)
+      {
+        $getStudent = User::getSingle($student_id);
+        $data['getMyTimetable'] = $this->getTimetable($getStudent->class_id);
+        $data['getExamTimetable'] = $this->getExamTimetable($getStudent->class_id);
+
+        $data['getStudent'] = $getStudent;
+        $data['header_title'] = 'Student Calendar';
+        return view('parent.my_calendar', $data);
+    }
+    // teacher side 
+    public function MyCalendarTeacher()
+    {
+        $teacher_id = Auth::user()->id;
+        $data['getClassTimetable'] = AssignClassModel::getCalendarTeacher($teacher_id);
+        $data['getExamTimetable'] = ExamScheduleModel::getExamTimetableTeacher($teacher_id);
+
+        $data['header_title'] = 'Teacher Calendar';
+        return view('teacher.my_calendar', $data);
     }
 }

@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('style')
   
-{{-- <style type="text/css">
+<style type="text/css">
     .fc-daygrid-event {
         white-space: normal;
     }
-</style> --}}
+</style>
 
 @endsection
 
@@ -15,7 +15,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>My Calendar</h1>
+                        <h1>My Calendar :<span style="color: red"> {{ $getStudent->name }}  {{ $getStudent->last_name }}</span></h1>
                     </div>
                 </div>
             </div>
@@ -34,10 +34,9 @@
     </div>
 @endsection
 @section('script')
-    <script src='{{ url('public/dist/fullcalendar/index.global.js') }}'></script>
-
+    <script src='{{ url('public/dist/fullcalendar/index.global.js') }}'></script> 
     <script type="text/javascript">
-        var events = new Array();
+        var events = new Array();      
         @foreach ($getMyTimetable as $value)
             @foreach ($value['week'] as $week)
                 events.push({
@@ -49,7 +48,7 @@
                 })
             @endforeach
         @endforeach
-
+        
         @foreach ($getExamTimetable as $valueE)
             @foreach ($valueE['exam'] as $exam)
                 events.push({

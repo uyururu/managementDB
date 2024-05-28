@@ -78,4 +78,20 @@ class AssignClassModel extends Model
         $getWeek = WeekModel::getWeekUsingName(date('l'));
         return ClassSubjectTimetableModel::getRecordClassSubject($class_id, $subject_id, $getWeek->id);
     }
+    // calendar
+    static public function getCalendarTeacher($teacher_id)
+    {   
+        return  AssignClassModel::select('class_subject_timtable.*', 'class.name as class_name', 
+                            'subject.name as subject_name', 'week.name as week_name', 'week.fullcalendar_day')
+        ->join('class', 'class_id', '=', 'assign_class_teacher.class_id')
+        ->join('class_subject', 'class_subject.class_id', '=', 'assign_class_teacher.class_id')
+        ->join('class_subject_timtable', 'class_subject_timtable.subject_id', '=', 'class_subject.subject_id')
+        ->join('subject', 'subject.id', '=', 'class_subject_timtable.subject_id')
+        ->join('week', 'week.id', '=', 'class_subject_timtable.week_id')
+        ->where('assign_class_teacher.teacher_id', '=', $teacher_id)
+        ->where('assign_class_teacher.status', '=', 0)
+        ->where('assign_class_teacher.is_delete', '=', 0)
+        ->get();
+    }
+    
 }
