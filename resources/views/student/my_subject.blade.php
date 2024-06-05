@@ -35,28 +35,12 @@
                                                 <td>{{ $value->id }}</td>
                                                 <td>{{ $value->subject_name }}</td>
                                                 <td>{{ $value->subject_type }}</td>
-                                                {{-- <td>
-                                                    @if ($value->status == 0)
-                                                        Active
-                                                    @else
-                                                        Inactive
-                                                    @endif
-                                                </td>
-                                                <td>{{ $value->created_by_name }}</td>
-                                                <td>{{ date('d-m-Y H:i A', strtotime($value->created_at)) }}</td>
-                                                <td>
-                                                    <a href="{{ url('admin/subject/edit/' . $value->id) }}"
-                                                        class="btn btn-primary">Edit</a>
-                                                    <a href="{{ url('admin/subject/delete/' . $value->id) }}"
-                                                        class="btn btn-danger">Delete</a>
-                                                </td> --}}
                                             </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
                                 <div style="padding: 10px;text-align: right">
-                                    {{-- {!! $getRecord->appends(Illuminate\Support\Facades\Request::except('page'))->links() !!} --}}
-                                </div>
+                                 </div>
                             </div>
                         </div>
                     </div>

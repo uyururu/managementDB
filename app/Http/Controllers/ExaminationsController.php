@@ -267,10 +267,10 @@ class ExaminationsController extends Controller
         {
             foreach($request->mark as $mark)
             {
-                $class_work = !empty($mark['class_work']) ? $mark['class_work'] : 0 ;
-                $home_work = !empty($mark['home_work']) ? $mark['home_work'] : 0 ;
-                $test_work = !empty($mark['test_work']) ? $mark['test_work'] : 0 ;
-                $exam = !empty($mark['exam']) ? $mark['exam'] : 0 ;
+                $class_work     = !empty($mark['class_work']) ? $mark['class_work'] : 0 ;
+                $home_work      = !empty($mark['home_work']) ? $mark['home_work'] : 0 ;
+                $test_work      = !empty($mark['test_work']) ? $mark['test_work'] : 0 ;
+                $exam           = !empty($mark['exam']) ? $mark['exam'] : 0 ;
 
                 // save
                 $getMark = MarksRegisterModel::CheckAlreadyMark($request->student_id, $request->exam_id, 
@@ -300,7 +300,33 @@ class ExaminationsController extends Controller
     }
     public function single_submit_marks_register(Request $request)
     {
-        dd($request->all());
+        $class_work     = !empty($request->class_work ? $request->class_work : 0);
+        $home_work      = !empty($request->home_work ? $request->home_work : 0);
+        $test_work      = !empty($request->test_work ? $request->test_work : 0);
+        $exam           = !empty($request->exam ? $request->exam : 0);
+        // save
+        $getMark = MarksRegisterModel::CheckAlreadyMark($request->student_id, $request->exam_id, 
+                                                $request->class_id,  $request->subject_id);
+                if(!empty( $getMark ))
+                {
+                    $save = $getMark;
+                }else{
+                    $save = new MarksRegisterModel;
+                    $save->created_by   =   Auth::user()->id;
+
+                }
+                $save->student_id   =   $request->student_id;
+                $save->class_id     =   $request->class_id;
+                $save->exam_id      =   $request->exam_id;
+                $save->subject_id   =   $request->subject_id;
+                $save->class_work   =   $class_work;
+                $save->home_work    =   $home_work;
+                $save->test_work    =   $test_work;
+                $save->exam         =   $exam;
+                $save->save();
+                // 
+                $json['message'] = "Mark Register Successfully saved";
+                echo json_encode($json);
     }
     
     
